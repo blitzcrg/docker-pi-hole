@@ -56,3 +56,15 @@ LABEL url="https://www.github.com/pi-hole/docker-pi-hole"
 HEALTHCHECK CMD dig +norecurse +retry=0 @127.0.0.1 pi.hole || exit 1
 
 SHELL ["/bin/bash", "-c"]
+
+# Monitoring
+RUN wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.10.0-amd64.deb
+RUN DPKG -i filebeat-7.10.0-amd64.deb
+RUN RM filebeat-7.10.0-amd64.deb
+COPY filebeat.yml /etc/filebeat/filebeat.yml
+COPY entrypoint.sh /bin/entrypoint.sh
+RUN chmod +x /bin/entrypoint.sh
+
+# Edit STASH env to point at logstash server
+ENV STASH <logstash-server>:5044 
+CMD /bin/entrypoint.sh "java -jar /app/service.jar -server --spring.profiles.active=${PROFILE}"
