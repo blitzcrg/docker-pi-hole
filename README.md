@@ -5,6 +5,8 @@
 </p>
 <!-- Delete above HTML and insert markdown for dockerhub : ![Pi-hole](https://pi-hole.github.io/graphics/Vortex/Vortex_with_text.png) -->
 
+Forked from Docker Pi-hole to add Filebeat agent for collecting dnsmasq logs.
+
 ## Quick Start
 
 1. Copy docker-compose-example.yml to docker-compose.yml and update as needed. See example below:
